@@ -1,7 +1,18 @@
-﻿Nome: Pedro
-Telefone: 12341234
+﻿Nome: Pedro Lisboa
+Telefone: (11)953011234
 Cidade: Aruja
-Desastre: Chuva intensa
-Descricao: Enchente
+Desastre: Enchente
+Descricao: Alagamento na rodovia
 Data: 20/10/2024
+Latitude: -23.5505
+Longitude: -46.6333
+
+Nome: Joao
+Telefone: (11)12344321
+Cidade: Sao Paulo
+Desastre: Terremoto
+Descricao: Desabamento de construcao
+Data: 14/12/2020
+Latitude: -25.5503
+Longitude: -46.0000
 
