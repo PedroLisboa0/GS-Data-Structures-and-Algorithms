@@ -1,0 +1,7 @@
+﻿Nome: Pedro
+Telefone: 12341234
+Cidade: Aruja
+Desastre: Chuva intensa
+Descricao: Enchente
+Data: 20/10/2024
+
