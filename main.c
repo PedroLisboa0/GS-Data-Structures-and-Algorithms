@@ -16,6 +16,7 @@
 #define PI 3.14159265358979323846
 #define R_EARTH_KM 6371.0
 
+// Estrutura para armazenar um relato
 typedef struct {
     char nome[TAM_NOME];
     char telefone[TAM_TELEFONE];
@@ -29,14 +30,17 @@ typedef struct {
     char longitude[TAM_COORDENADA];
 } Entrada;
 
+// Remove o caractere de nova linha '\n' de uma string
 void remover_newline(char *str) {
     str[strcspn(str, "\n")] = '\0';
 }
 
+// Converte graus para radianos
 double graus_para_radianos(double grau) {
     return grau * PI / 180.0;
 }
 
+// Calcula a distância entre dois pontos geográficos usando a fórmula de Haversine
 double calcular_distancia(double lat1, double lon1, double lat2, double lon2) {
     lat1 = graus_para_radianos(lat1);
     lon1 = graus_para_radianos(lon1);
@@ -53,6 +57,7 @@ double calcular_distancia(double lat1, double lon1, double lat2, double lon2) {
     return R_EARTH_KM * c;
 }
 
+// Salva um relato no arquivo
 int salvar_relatos(Entrada relato) {
     FILE *arquivo = fopen(ARQUIVO, "a");
     if (arquivo == NULL) {
@@ -60,6 +65,7 @@ int salvar_relatos(Entrada relato) {
         return 1;
     }
 
+    // Escreve os dados do relato no arquivo
     fprintf(arquivo,
         "Nome: %s\n"
         "Telefone: %s\n"
@@ -87,6 +93,7 @@ int salvar_relatos(Entrada relato) {
     return 0;
 }
 
+// Lê relatos do arquivo e mostra apenas os que estão até 10km da posição do usuário
 void ler_relatos_com_filtro() {
     double user_lat, user_lon;
     printf("Digite sua latitude: ");
@@ -109,6 +116,7 @@ void ler_relatos_com_filtro() {
 
     printf("\nRelatos encontrados ate 10km:\n\n");
 
+    // Lê o arquivo linha por linha e monta o relato
     while (fgets(linha, sizeof(linha), arquivo)) {
         if (strncmp(linha, "Nome: ", 6) == 0) {
             strcpy(relato.nome, linha + 6);
@@ -135,6 +143,7 @@ void ler_relatos_com_filtro() {
             strcpy(relato.longitude, linha + 11);
             remover_newline(relato.longitude);
         } else if (strncmp(linha, "---", 3) == 0 && dentro_do_bloco) {
+            // Converte latitude e longitude para double
             lat_relato = atof(relato.latitude);
             lon_relato = atof(relato.longitude);
             double distancia = calcular_distancia(user_lat, user_lon, lat_relato, lon_relato);
@@ -143,6 +152,7 @@ void ler_relatos_com_filtro() {
                 mostrar = 1;
             }
 
+            // Exibe o relato se estiver dentro do raio
             if (mostrar) {
                 printf("Nome: %s\nTelefone: %s\nCidade: %s\nDesastre: %s\nDescricao: %s\nData: %s/%s/%s\nLatitude: %s\nLongitude: %s\n\n",
                     relato.nome, relato.telefone, relato.cidade, relato.tipo, relato.descricao,
@@ -158,6 +168,7 @@ void ler_relatos_com_filtro() {
     printf("Fim da listagem.\n\n");
 }
 
+// Lê dados do usuário e adiciona um novo relato
 void adicionar_relato() {
     Entrada relato;
 
